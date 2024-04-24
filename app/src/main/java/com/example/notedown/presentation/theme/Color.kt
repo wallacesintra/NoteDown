@@ -1,4 +1,4 @@
-package com.example.notedown.ui.theme
+package com.example.notedown.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 

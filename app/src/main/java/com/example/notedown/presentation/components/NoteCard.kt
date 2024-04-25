@@ -55,14 +55,15 @@ import com.example.notedown.R
 fun NoteCard(
     title: String,
     notes: String,
-    date: String
+    date: String,
+    cardColor: Color
 ){
     Card(
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primary
+            containerColor = cardColor
         ),
         modifier = Modifier
-            .width(180.dp)
+            .width(170.dp)
             .height(200.dp)
             .padding(8.dp)
     ) {
@@ -83,6 +84,7 @@ fun NoteCard(
                 Text(
                     text = title,
                     style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.background,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.W700,
                     modifier = Modifier.padding(vertical = 3.dp)
@@ -94,7 +96,7 @@ fun NoteCard(
                     fontWeight = FontWeight.W300,
                     style = TextStyle(
                         brush = Brush.verticalGradient(
-                            colors = listOf(MaterialTheme.colorScheme.onPrimary, MaterialTheme.colorScheme.onPrimary,Color.Transparent)
+                            colors = listOf(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background,Color.Transparent)
                         )
                     ),
                     fontSize = 14.sp,
@@ -103,6 +105,7 @@ fun NoteCard(
             Text(
                 text = date,
                 fontWeight = FontWeight.W500,
+                color = MaterialTheme.colorScheme.background,
                 modifier = Modifier
                     .align(Alignment.BottomStart)
             )
@@ -116,7 +119,6 @@ fun NoteCard(
                 Column(
                     modifier = Modifier
                         .background(MaterialTheme.colorScheme.background)
-//                        .background(editColor)
                         .padding(4.dp)
                 ) {
                     AnimatedVisibility(
@@ -135,7 +137,8 @@ fun NoteCard(
                         contentDescription = stringResource(id = R.string.edit),
                         modifier = Modifier.clickable(
                             onClick = { editable = !editable}
-                        )
+                        ),
+                        tint = cardColor
                     )
                 }
             }
@@ -150,7 +153,8 @@ fun NoteCardPreview(){
     NoteCard(
         title = "course designer udemy",
         notes = "Lorem23 uosgfo ouggfso ioggfs ougfa uogogafboa iphkhpaf iihphaf ugogfa uooga uogogaf uogogaf ougogaf ouogaf",
-        date = "2 April, 2000"
+        date = "2 April, 2000",
+        cardColor = Color(0xFFF7D44C)
     )
 
 }

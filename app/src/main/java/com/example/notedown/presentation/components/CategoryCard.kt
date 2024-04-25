@@ -38,17 +38,12 @@ fun CategoryCard(
     var active by remember {
         mutableStateOf(isActive)
     }
-
-    val color by remember {
-        mutableStateOf(if (active) cardColor else Color.Transparent)
-    }
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
             .padding(5.dp)
             .height(40.dp)
             .clip(RoundedCornerShape(30.dp))
-            .background(color)
             .border(2.dp, cardColor, RoundedCornerShape(30.dp))
             .padding(horizontal = 10.dp)
             .clickable(

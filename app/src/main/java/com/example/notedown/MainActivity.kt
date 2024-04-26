@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.notedown.presentation.components.Note
 import com.example.notedown.presentation.components.NoteCard
+import com.example.notedown.presentation.models.NoteModel
 import com.example.notedown.presentation.screens.Home
 import com.example.notedown.presentation.theme.NoteDownTheme
 
@@ -26,25 +27,24 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-//                    Row(
-//                        modifier = Modifier.fillMaxSize()
-//                    ) {
-//                        NoteCard(
-//                            title = "course designer udemy",
-//                            notes = "Lorem23 uosgfo ouggfso ioggfs ougfa uogogafboa iphkhpaf iihphaf ugogfa uooga uogogaf uogogaf ougogaf ouogaf",
-//                            date = "2 April, 2000"
-//                        )
-//                        NoteCard(
-//                            title = "course designer udemy",
-//                            notes = "Lorem23 uosgfo ouggfso ioggfs ougfa uogogafboa iphkhpaf iihphaf ugogfa uooga uogogaf uogogaf ougogaf ouogaf",
-//                            date = "4 April, 2000"
-//                        )
-//
-//
-//                    }
-//                    Greeting("Android")
-//                    Note()
-                    Home()
+
+                    val noteList = listOf(
+                        NoteModel("read the note", notes = "iugiowfiiog ouguogwf oogwg ouuogw ouogwgf ouogogwg oogow ouhougwg ouogw gougogw goougw ", "important"),
+                        NoteModel("read the note", notes = "iugiowfiiog ouguogwf oogwg ouuogw ouogwgf ouogogwg oogow ouhougwg ouogw gougogw goougw ", "random"),
+                        NoteModel("read the note", notes = "iugiowfiiog ouguogwf oogwg ouuogw ouogwgf ouogogwg oogow ouhougwg ouogw gougogw goougw ", "lecture notes"),
+                        NoteModel("read the note", notes = "iugiowfiiog ouguogwf oogwg ouuogw ouogwgf ouogogwg oogow ouhougwg ouogw gougogw goougw ", "important"),
+                        NoteModel("read the note", notes = "iugiowfiiog ouguogwf oogwg ouuogw ouogwgf ouogogwg oogow ouhougwg ouogw gougogw goougw ", "shopping list"),
+                        NoteModel("read the note", notes = "iugiowfiiog ouguogwf oogwg ouuogw ouogwgf ouogogwg oogow ouhougwg ouogw gougogw goougw ", "random"),
+                        NoteModel("read the note", notes = "iugiowfiiog ouguogwf oogwg ouuogw ouogwgf ouogogwg oogow ouhougwg ouogw gougogw goougw ", "lecture notes"),
+                        NoteModel("read the note", notes = "iugiowfiiog ouguogwf oogwg ouuogw ouogwgf ouogogwg oogow ouhougwg ouogw gougogw goougw ", "work"),
+                        NoteModel("read the note", notes = "iugiowfiiog ouguogwf oogwg ouuogw ouogwgf ouogogwg oogow ouhougwg ouogw gougogw goougw ", "lecture notes"),
+                        NoteModel("read the note", notes = "iugiowfiiog ouguogwf oogwg ouuogw ouogwgf ouogogwg oogow ouhougwg ouogw gougogw goougw ", "work"),
+                        NoteModel("read the note", notes = "iugiowfiiog ouguogwf oogwg ouuogw ouogwgf ouogogwg oogow ouhougwg ouogw gougogw goougw ", "random"),
+
+
+                    )
+
+                    Home(noteList)
                 }
             }
         }

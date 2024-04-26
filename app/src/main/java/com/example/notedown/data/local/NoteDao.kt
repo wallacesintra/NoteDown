@@ -1,4 +1,4 @@
-package com.example.notedown.data.remote
+package com.example.notedown.data.local
 
 import androidx.room.Dao
 import androidx.room.Delete

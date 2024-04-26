@@ -7,6 +7,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -22,12 +25,14 @@ import com.example.notedown.R
 import com.example.notedown.presentation.components.BtnAddNote
 import com.example.notedown.presentation.components.CategoryCard
 import com.example.notedown.presentation.components.NoteCard
+import com.example.notedown.presentation.models.NoteModel
 import com.example.notedown.presentation.models.allCategories
 import com.example.notedown.presentation.models.categories
 
-@Preview(showBackground = true, showSystemUi = true)
 @Composable
-fun Home(){
+fun Home(
+    noteList: List<NoteModel>
+){
     Box {
         Column(
             modifier = Modifier
@@ -49,7 +54,6 @@ fun Home(){
                 items(allCategories) { item ->
                     CategoryCard(
                         category = item.type,
-                        cardColor = item.color,
                         isActive = item.active,
                         count = item.count ?: 0
                     )
@@ -57,19 +61,18 @@ fun Home(){
 
             }
 
-            Row {
-                NoteCard(
-                    title = "course designer udemy",
-                    notes = "Lorem23 uosgfo ouggfso ioggfs ougfa uogogafboa iphkhpaf iihphaf ugogfa uooga uogogaf uogogaf ougogaf ouogaf",
-                    date = "2 April, 2000",
-                    cardColor = Color(0xFFF7D44C)
-                )
-                NoteCard(
-                    title = "course designer udemy",
-                    notes = "Lorem23 uosgfo ouggfso ioggfs ougfa uogogafboa iphkhpaf iihphaf ugogfa uooga uogogaf uogogaf ougogaf ouogaf",
-                    date = "4 April, 2000",
-                    cardColor = Color(0xFFEB7A53)
-                )
+            LazyVerticalGrid(
+                columns = GridCells.Adaptive(minSize = 160.dp)
+            ) {
+                items(noteList) {item: NoteModel ->
+                    NoteCard(
+                        title =item.title,
+                        notes = item.notes,
+                        date = "2 Jun, 2000",
+                        category = item.category
+                    )
+                }
+
             }
         }
 

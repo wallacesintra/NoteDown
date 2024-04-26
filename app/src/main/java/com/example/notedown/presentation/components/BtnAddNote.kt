@@ -1,6 +1,9 @@
 package com.example.notedown.presentation.components
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -35,6 +38,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.notedown.R
 import com.example.notedown.presentation.models.allCategories
+import com.example.notedown.presentation.util.colorMap
 
 
 @Preview(showBackground = true, showSystemUi = true)
@@ -52,13 +56,19 @@ fun BtnAddNote(
             .background(MaterialTheme.colorScheme.background)
             .border(2.dp, MaterialTheme.colorScheme.onBackground, RoundedCornerShape(30.dp))
             .padding(12.dp)
+            .animateContentSize(
+                animationSpec = spring(
+                    dampingRatio = Spring.DampingRatioHighBouncy,
+                    stiffness = Spring.StiffnessLow
+                )
+            )
     ) {
         AnimatedVisibility(visible = expanded) {
             Column {
                 for (i in allCategories.drop(1)){
                     AddCategoryCard(
                         category = i.type,
-                        cardColor =i.color,
+//                        cardColor =i.color,
                     )
                 }
             }
@@ -83,9 +93,11 @@ fun BtnAddNote(
 @Composable
 fun AddCategoryCard(
     category: String,
-    cardColor:Color,
     onClick: () -> Unit = {}
 ){
+
+    val cardColor = colorMap[category] ?: Color(0xFFA8D672)
+
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier

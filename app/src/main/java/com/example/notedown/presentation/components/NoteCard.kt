@@ -6,6 +6,7 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.animateValueAsState
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -49,6 +50,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.notedown.R
+import com.example.notedown.presentation.util.colorMap
 
 
 @Composable
@@ -56,23 +58,26 @@ fun NoteCard(
     title: String,
     notes: String,
     date: String,
-    cardColor: Color
+    category: String,
 ){
+
+    val color = colorMap[category] ?: Color(0xFFA8D672)
+
     Card(
         colors = CardDefaults.cardColors(
-            containerColor = cardColor
+            containerColor = color
         ),
         modifier = Modifier
             .width(170.dp)
             .height(200.dp)
             .padding(8.dp)
+//            .border(2.dp, MaterialTheme.colorScheme.onBackground, RoundedCornerShape(8.dp))
     ) {
+
         var editable by remember{
             mutableStateOf(false)
         }
-//        val editColor:Color by animateColorAsState( if (editable) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.background,
-//            label = "edit color"
-//        )
+
         Box(
             modifier = Modifier.padding(8.dp)
         ) {
@@ -138,7 +143,7 @@ fun NoteCard(
                         modifier = Modifier.clickable(
                             onClick = { editable = !editable}
                         ),
-                        tint = cardColor
+                        tint = color
                     )
                 }
             }
@@ -154,7 +159,8 @@ fun NoteCardPreview(){
         title = "course designer udemy",
         notes = "Lorem23 uosgfo ouggfso ioggfs ougfa uogogafboa iphkhpaf iihphaf ugogfa uooga uogogaf uogogaf ougogaf ouogaf",
         date = "2 April, 2000",
-        cardColor = Color(0xFFF7D44C)
+        category = "important"
+
     )
 
 }

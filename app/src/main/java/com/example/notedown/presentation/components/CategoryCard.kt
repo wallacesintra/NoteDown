@@ -1,6 +1,9 @@
 package com.example.notedown.presentation.components
 
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -25,16 +28,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
+import com.example.notedown.presentation.util.colorMap
 
 
 @Composable
 fun CategoryCard(
     category: String,
-    cardColor: Color,
+//    cardColor: Color,
     isActive: Boolean,
     count: Int
 ){
+     val cardColor = colorMap[category] ?: Color(0xFFA8D672)
+
+
     var active by remember {
         mutableStateOf(isActive)
     }
@@ -49,6 +55,12 @@ fun CategoryCard(
             .clickable(
                 onClick = { active = !active }
             )
+//            .animateContentSize(
+//                animationSpec = spring(
+//                    dampingRatio = Spring.DampingRatioHighBouncy,
+//                    stiffness = Spring.StiffnessLow
+//                )
+//            )
 
     ) {
         Row(
@@ -75,5 +87,5 @@ fun CategoryCard(
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun PreviewCategoryCard(){
-    CategoryCard(category = "all", Color.Yellow, true, 5)
+    CategoryCard(category = "all", true, 5)
 }

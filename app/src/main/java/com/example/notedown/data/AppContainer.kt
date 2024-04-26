@@ -2,7 +2,7 @@ package com.example.notedown.data
 
 import android.content.Context
 import androidx.room.Room
-import com.example.notedown.data.remote.NoteDatabase
+import com.example.notedown.data.local.NoteDatabase
 
 interface AppContainer {
     val noteDatabase: NoteDatabase

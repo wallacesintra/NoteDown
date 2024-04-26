@@ -1,4 +1,4 @@
-package com.example.notedown.data.remote
+package com.example.notedown.data.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

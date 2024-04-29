@@ -22,16 +22,18 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.notedown.R
+import com.example.notedown.data.local.NoteEntity
 import com.example.notedown.presentation.components.BtnAddNote
 import com.example.notedown.presentation.components.CategoryCard
 import com.example.notedown.presentation.components.NoteCard
+import com.example.notedown.presentation.events.HomeEvents
 import com.example.notedown.presentation.models.NoteModel
 import com.example.notedown.presentation.models.allCategories
-import com.example.notedown.presentation.models.categories
 
 @Composable
 fun Home(
-    noteList: List<NoteModel>
+    noteList: List<NoteEntity>,
+    onClick: (HomeEvents) -> Unit = {}
 ){
     Box {
         Column(
@@ -55,7 +57,8 @@ fun Home(
                     CategoryCard(
                         category = item.type,
                         isActive = item.active,
-                        count = item.count ?: 0
+                        count = item.count ?: 0,
+                        onEvent = { HomeEvents.SortNotes(item.sortType) }
                     )
                 }
 
@@ -64,15 +67,13 @@ fun Home(
             LazyVerticalGrid(
                 columns = GridCells.Adaptive(minSize = 160.dp)
             ) {
-                items(noteList) {item: NoteModel ->
+                items(noteList) {item ->
                     NoteCard(
                         title =item.title,
-                        notes = item.notes,
-                        date = "2 Jun, 2000",
-                        category = item.category
+                        notes =item.note,
+                        category =item.category
                     )
                 }
-
             }
         }
 

@@ -28,6 +28,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.notedown.presentation.events.HomeEvents
 import com.example.notedown.presentation.util.colorMap
 
 
@@ -36,7 +37,10 @@ fun CategoryCard(
     category: String,
 //    cardColor: Color,
     isActive: Boolean,
-    count: Int
+    onEvent: (HomeEvents) -> Unit,
+//    onEvent: () -> Unit,
+    count: Int,
+    modifier: Modifier = Modifier
 ){
      val cardColor = colorMap[category] ?: Color(0xFFA8D672)
 
@@ -53,7 +57,22 @@ fun CategoryCard(
             .border(2.dp, cardColor, RoundedCornerShape(30.dp))
             .padding(horizontal = 10.dp)
             .clickable(
-                onClick = { active = !active }
+
+                onClick = {
+                    active = !active
+                    if (active) {
+                        { onEvent }
+                    }
+                }
+//                onClick = {
+//                    when (active) {
+//                        true -> {
+//                            { onEvent }
+//                        }
+//
+//                        false -> !active
+//                    }
+//                }
             )
 //            .animateContentSize(
 //                animationSpec = spring(
@@ -87,5 +106,5 @@ fun CategoryCard(
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun PreviewCategoryCard(){
-    CategoryCard(category = "all", true, 5)
+    CategoryCard(category = "all", true, {}, 7)
 }

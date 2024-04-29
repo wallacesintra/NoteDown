@@ -57,7 +57,7 @@ import com.example.notedown.presentation.util.colorMap
 fun NoteCard(
     title: String,
     notes: String,
-    date: String,
+    date: String = "12 Apr, 2024",
     category: String,
 ){
 

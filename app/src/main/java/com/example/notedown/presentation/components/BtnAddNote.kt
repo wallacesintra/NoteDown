@@ -7,7 +7,6 @@ import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -37,6 +36,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.notedown.R
+import com.example.notedown.presentation.events.HomeEvents
 import com.example.notedown.presentation.models.allCategories
 import com.example.notedown.presentation.util.colorMap
 
@@ -67,9 +67,9 @@ fun BtnAddNote(
             Column {
                 for (i in allCategories.drop(1)){
                     AddCategoryCard(
-                        category = i.type,
-//                        cardColor =i.color,
+                        category = i.type
                     )
+
                 }
             }
             
@@ -93,7 +93,7 @@ fun BtnAddNote(
 @Composable
 fun AddCategoryCard(
     category: String,
-    onClick: () -> Unit = {}
+//    onClick: (Any?) -> Unit
 ){
 
     val cardColor = colorMap[category] ?: Color(0xFFA8D672)
@@ -107,7 +107,7 @@ fun AddCategoryCard(
             .border(2.dp, cardColor, RoundedCornerShape(30.dp))
             .padding(horizontal = 10.dp)
             .clickable(
-                onClick = { onClick() }
+                onClick = { }
             )
     ) {
         Text(

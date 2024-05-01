@@ -14,9 +14,13 @@ interface NoteDao {
     @Delete
     fun deleteNote(note: NoteEntity)
 
-    @Query("SELECT * FROM noteentity")
+    @Query("SELECT * FROM noteentity ORDER BY id DESC")
     fun displayAll(): Flow<List<NoteEntity>>
 
     @Query("SELECT * FROM noteentity WHERE  category = :category")
     fun sortNotes(category: String) : Flow<List<NoteEntity>>
+
+    @Query("SELECT * FROM noteentity WHERE id = :noteId")
+    fun displayNoteWithId(noteId: Int): Flow<NoteEntity>
+
 }

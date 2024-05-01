@@ -8,7 +8,7 @@ sealed class HomeEvents  {
     data class SortNotes(val sortType: SortType) : HomeEvents()
     data class DeleteNote(val note: NoteEntity): HomeEvents()
     data class AddNote(val type: String): HomeEvents()
-    data class EditNote(val note: NoteEntity): HomeEvents()
+    data class EditNote(val noteId: Int): HomeEvents()
 
 
     //test

@@ -17,6 +17,7 @@ import com.example.notedown.presentation.models.Categories
 import com.example.notedown.presentation.models.HomeState
 import com.example.notedown.presentation.models.SortType
 import com.example.notedown.presentation.screens.HomeViewState
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -32,6 +33,7 @@ class HomeViewModel(
 
 
     var homeState by mutableStateOf(HomeViewState())
+        private set
 
     @OptIn(ExperimentalCoroutinesApi::class)
     private val _notes = _sortType
@@ -56,7 +58,22 @@ class HomeViewModel(
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), HomeState())
 
-    private fun AddNewNote(type: String){}
+    private fun addNewNote(type: String){
+        val title: String = "Add title"
+        val notes: String = "start writing note"
+
+        val noteElement = NoteEntity(
+            title = title,
+            note = notes,
+            category = type
+        )
+
+        viewModelScope.launch(Dispatchers.IO) {
+            noteDao.insertNote(noteElement)
+        }
+
+    }
+
 
     fun onEvent(event: HomeEvents){
         when (event){
@@ -64,9 +81,9 @@ class HomeViewModel(
                 _sortType.value = event.sortType
             }
 
-            is HomeEvents.AddNote -> AddNewNote(event.type)
+            is HomeEvents.AddNote -> addNewNote(event.type)
             is HomeEvents.DeleteNote -> {
-                viewModelScope.launch {
+                viewModelScope.launch(Dispatchers.IO) {
                     noteDao.deleteNote(event.note)
                 }
             }
@@ -78,7 +95,6 @@ class HomeViewModel(
             is HomeEvents.OnUpdateMyData -> {
                 homeState = homeState.copy(
                     myDataInViewState = event.myDataInEvent
-
                 )
             }
         }

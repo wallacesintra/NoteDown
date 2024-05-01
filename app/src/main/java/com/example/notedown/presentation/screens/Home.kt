@@ -3,7 +3,6 @@ package com.example.notedown.presentation.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyRow
@@ -14,27 +13,40 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.notedown.R
 import com.example.notedown.data.local.NoteEntity
 import com.example.notedown.presentation.components.BtnAddNote
 import com.example.notedown.presentation.components.CategoryCard
 import com.example.notedown.presentation.components.NoteCard
 import com.example.notedown.presentation.events.HomeEvents
-import com.example.notedown.presentation.models.NoteModel
+import com.example.notedown.presentation.models.Category
 import com.example.notedown.presentation.models.allCategories
+import com.example.notedown.presentation.navigation.Screens
 
 @Composable
 fun Home(
+    navController: NavController,
     noteList: List<NoteEntity>,
-    onClick: (HomeEvents) -> Unit = {}
+    categoryList: List<Category>,
+    onSortCategoryClick: (HomeEvents) -> Unit = {},
+    onAddNoteClick: (HomeEvents) -> Unit = {},
+    onEditNoteEvent: () -> Unit,
+    onDeleteNoteEvent: (HomeEvents) -> Unit,
+    count: Int?
 ){
+
+    var activeCategory by remember { mutableStateOf(categoryList.first()) }
+
     Box {
         Column(
             modifier = Modifier
@@ -55,23 +67,38 @@ fun Home(
             ) {
                 items(allCategories) { item ->
                     CategoryCard(
-                        category = item.type,
-                        isActive = item.active,
-                        count = item.count ?: 0,
-                        onEvent = { HomeEvents.SortNotes(item.sortType) }
+                        category = item,
+                        isCategoryActive = item == activeCategory,
+                        onSortCategoryClick = {
+                            onSortCategoryClick(item.onSortNotesEvent)
+                            activeCategory = item
+                        },
+                        count = count
                     )
                 }
-
             }
+
+//            LazyRow(
+//                modifier = Modifier.padding(vertical = 20.dp)
+//            ) {
+//                items(allCategories) { item ->
+//                    CategoryCard(
+//                        category = item,
+//                        onSortCategoryClick = { onSortCategoryClick(item.onSortNotesEvent) },
+//                        count = count
+//                    )
+//                }
+//            }
 
             LazyVerticalGrid(
                 columns = GridCells.Adaptive(minSize = 160.dp)
             ) {
                 items(noteList) {item ->
                     NoteCard(
-                        title =item.title,
-                        notes =item.note,
-                        category =item.category
+                        noteElement = item,
+                        onEditNoteEvent = { navController.navigate(Screens.Note.route) },
+                        onDeleteNoteEvent = onDeleteNoteEvent,
+
                     )
                 }
             }
@@ -83,7 +110,10 @@ fun Home(
                 .padding(8.dp)
                 .align(Alignment.BottomEnd)
         ) {
-            BtnAddNote()
+            BtnAddNote(
+                categoryList = categoryList,
+                onClickAddNote = onAddNoteClick
+            )
         }
     }
 }

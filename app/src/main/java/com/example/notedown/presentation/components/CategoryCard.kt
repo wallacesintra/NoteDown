@@ -1,10 +1,6 @@
 package com.example.notedown.presentation.components
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.animateContentSize
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
-import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -12,9 +8,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -29,24 +23,22 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.notedown.presentation.events.HomeEvents
+import com.example.notedown.presentation.models.Category
 import com.example.notedown.presentation.util.colorMap
 
 
 @Composable
 fun CategoryCard(
-    category: String,
-//    cardColor: Color,
-    isActive: Boolean,
-    onEvent: (HomeEvents) -> Unit,
-//    onEvent: () -> Unit,
-    count: Int,
-    modifier: Modifier = Modifier
+    onSortCategoryClick: (HomeEvents) -> Unit = {},
+    category: Category,
+    isCategoryActive: Boolean,
+    count: Int?
+//    modifier: Modifier = Modifier
 ){
-     val cardColor = colorMap[category] ?: Color(0xFFA8D672)
-
+     val cardColor = colorMap[category.type] ?: Color(0xFFA8D672)
 
     var active by remember {
-        mutableStateOf(isActive)
+        mutableStateOf(isCategoryActive)
     }
     Box(
         contentAlignment = Alignment.Center,
@@ -57,37 +49,20 @@ fun CategoryCard(
             .border(2.dp, cardColor, RoundedCornerShape(30.dp))
             .padding(horizontal = 10.dp)
             .clickable(
-
                 onClick = {
                     active = !active
                     if (active) {
-                        { onEvent }
+                        onSortCategoryClick(category.onSortNotesEvent)
                     }
                 }
-//                onClick = {
-//                    when (active) {
-//                        true -> {
-//                            { onEvent }
-//                        }
-//
-//                        false -> !active
-//                    }
-//                }
             )
-//            .animateContentSize(
-//                animationSpec = spring(
-//                    dampingRatio = Spring.DampingRatioHighBouncy,
-//                    stiffness = Spring.StiffnessLow
-//                )
-//            )
-
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = category,
+                text = category.type,
                 fontSize = 18.sp,
             )
 
@@ -106,5 +81,5 @@ fun CategoryCard(
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun PreviewCategoryCard(){
-    CategoryCard(category = "all", true, {}, 7)
+//    CategoryCard(category = "all", true, {}, 7)
 }

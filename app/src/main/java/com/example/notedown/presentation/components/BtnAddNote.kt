@@ -9,16 +9,9 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -32,19 +25,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.notedown.R
 import com.example.notedown.presentation.events.HomeEvents
-import com.example.notedown.presentation.models.allCategories
+import com.example.notedown.presentation.models.Category
 import com.example.notedown.presentation.util.colorMap
 
 
-@Preview(showBackground = true, showSystemUi = true)
 @Composable
 fun BtnAddNote(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    categoryList: List<Category>,
+    onClickAddNote: (HomeEvents) -> Unit = {}
 ){
 
     var expanded by remember {
@@ -65,11 +58,11 @@ fun BtnAddNote(
     ) {
         AnimatedVisibility(visible = expanded) {
             Column {
-                for (i in allCategories.drop(1)){
+                for (i in categoryList.drop(1)){
                     AddCategoryCard(
-                        category = i.type
+                        category = i,
+                        onClickAddNote = onClickAddNote
                     )
-
                 }
             }
             
@@ -92,11 +85,11 @@ fun BtnAddNote(
 
 @Composable
 fun AddCategoryCard(
-    category: String,
-//    onClick: (Any?) -> Unit
+    category: Category,
+    onClickAddNote: (HomeEvents) -> Unit
 ){
 
-    val cardColor = colorMap[category] ?: Color(0xFFA8D672)
+    val cardColor = colorMap[category.type] ?: Color(0xFFA8D672)
 
     Box(
         contentAlignment = Alignment.Center,
@@ -107,11 +100,11 @@ fun AddCategoryCard(
             .border(2.dp, cardColor, RoundedCornerShape(30.dp))
             .padding(horizontal = 10.dp)
             .clickable(
-                onClick = { }
+                onClick = { category.onAddNoteEvent?.let { onClickAddNote(it) } }
             )
     ) {
         Text(
-            text = category,
+            text = category.type,
             fontSize = 18.sp,
         )
     }

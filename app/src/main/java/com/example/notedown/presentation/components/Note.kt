@@ -47,7 +47,8 @@ import com.example.notedown.R
 
 @Composable
 fun Note(
-    navController: NavController
+    navController: NavController,
+    noteId: Int,
 ){
     var noteTitle by remember {
         mutableStateOf("")
@@ -81,7 +82,7 @@ fun Note(
                                 .padding(4.dp)
                                 .size(30.dp)
                                 .clickable(
-                                    onClick = {navController.popBackStack()}
+                                    onClick = { navController.popBackStack() }
                                 )
                         )
 
@@ -160,7 +161,8 @@ fun Note(
                     .align(Alignment.BottomEnd)
                     .padding(8.dp)
             ) {
-                BtnEditNote(colorList = listOf(Color.Green, Color.Red, Color.Blue, Color.Magenta))
+//                BtnEditNote(colorList = listOf(Color.Green, Color.Red, Color.Blue, Color.Magenta))
+                Text(text = noteId.toString())
 
             }
         }

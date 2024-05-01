@@ -44,7 +44,7 @@ import com.example.notedown.presentation.util.colorMap
 
 @Composable
 fun NoteCard(
-//    navController: NavController,
+    navController: NavController,
     noteElement: NoteEntity,
     date: String = "12 Apr, 2024",
     onEditNoteEvent: () -> Unit = {},
@@ -52,6 +52,8 @@ fun NoteCard(
 ){
 
     val color = colorMap[noteElement.category] ?: Color(0xFFA8D672)
+
+//    val noteId = noteElement.id
 
     Card(
         colors = CardDefaults.cardColors(
@@ -149,7 +151,9 @@ fun NoteCard(
 
                                 if (expanded){
 //                                    onEditNoteEvent(HomeEvents.DeleteNote(noteElement))
-                                    onEditNoteEvent()
+//                                    onEditNoteEvent()
+                                    navController.navigate("${Screens.Note.route}/${noteElement.id}")
+
 
                                 }
                             }

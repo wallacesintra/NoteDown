@@ -40,7 +40,7 @@ fun Home(
     categoryList: List<Category>,
     onSortCategoryClick: (HomeEvents) -> Unit = {},
     onAddNoteClick: (HomeEvents) -> Unit = {},
-    onEditNoteEvent: () -> Unit,
+//    onEditNoteEvent: () -> Unit,
     onDeleteNoteEvent: (HomeEvents) -> Unit,
     count: Int?
 ){
@@ -95,10 +95,10 @@ fun Home(
             ) {
                 items(noteList) {item ->
                     NoteCard(
+                        navController = navController,
                         noteElement = item,
-                        onEditNoteEvent = { navController.navigate(Screens.Note.route) },
+                        onEditNoteEvent = { navController.navigate("${Screens.Note.route}/${item.id}") },
                         onDeleteNoteEvent = onDeleteNoteEvent,
-
                     )
                 }
             }

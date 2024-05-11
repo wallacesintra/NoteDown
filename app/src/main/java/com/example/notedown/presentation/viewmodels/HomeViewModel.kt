@@ -13,7 +13,6 @@ import com.example.notedown.NoteApp
 import com.example.notedown.data.local.NoteDao
 import com.example.notedown.data.local.NoteEntity
 import com.example.notedown.presentation.events.HomeEvents
-import com.example.notedown.presentation.models.Categories
 import com.example.notedown.presentation.models.HomeState
 import com.example.notedown.presentation.models.SortType
 import com.example.notedown.presentation.screens.HomeViewState
@@ -39,7 +38,7 @@ class HomeViewModel(
     private val _notes = _sortType
         .flatMapLatest { sortType ->
             when (sortType) {
-                SortType.ALL -> noteDao.displayAll()
+                SortType.ALL -> noteDao.getAllNotes()
                 SortType.IMPORTANT -> noteDao.sortNotes("important")
                 SortType.WORK -> noteDao.sortNotes("work")
                 SortType.LECTURE_NOTE -> noteDao.sortNotes("lecture notes")

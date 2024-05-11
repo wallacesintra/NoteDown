@@ -4,14 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
-import com.example.notedown.presentation.components.Note
-import com.example.notedown.presentation.models.NoteElementState
-import com.example.notedown.presentation.models.NoteState
+import com.example.notedown.presentation.components.NoteContainer
 import com.example.notedown.presentation.models.allCategories
 import com.example.notedown.presentation.screens.Home
 import com.example.notedown.presentation.viewmodels.HomeViewModel
@@ -32,7 +28,7 @@ fun NavigationHost(){
     //Note viewmodel
     val noteViewModel: NoteViewModel = viewModel(factory = NoteViewModel.Factory)
     val noteState = noteViewModel.noteState
-    val noteUiState by noteState.collectAsState(initial = NoteState.Success(NoteElementState()))
+//    val noteUiState by noteState.collectAsState(initial = NoteState.Success(NoteElementState()))
 
 
 
@@ -47,24 +43,27 @@ fun NavigationHost(){
             onSortCategoryClick = { homeViewModel.onEvent(it) },
             onAddNoteClick = { homeViewModel.onEvent(it) },
             onDeleteNoteEvent = {homeViewModel.onEvent(it)},
-//            onEditNoteEvent = {},
+            onEditNoteCard = {
+                it.id?.let { noteElementId ->
+                    navController.navigate(
+                        Screens.Note.createRoute(
+                            noteId = noteElementId
+                        )
+                    )
+                }
+            },
             count = count
         )}
 
         composable(
-            "${Screens.Note.route}/{noteId}",
-            arguments = listOf(
-                navArgument(name = "noteId"){
-                    type = NavType.IntType
+            Screens.Note.route,
+            arguments =Screens.Note.navArguments
+            ) {
+                val noteId = it.arguments?.getInt("noteId")
+                if (noteId != null) {
+//                    NoteContainer(noteId = noteId,noteViewModel = noteViewModel)
+                    NoteScreen(noteId = noteId, noteViewModel = noteViewModel, navController = navController)
                 }
-            )
-            ) {backstackEntry ->
-            backstackEntry.arguments?.getInt("noteId")?.let {
-                Note(
-                    navController = navController,
-                    noteId = it
-                )
             }
-        }
     }
 }

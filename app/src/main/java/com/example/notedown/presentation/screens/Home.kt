@@ -40,7 +40,7 @@ fun Home(
     categoryList: List<Category>,
     onSortCategoryClick: (HomeEvents) -> Unit = {},
     onAddNoteClick: (HomeEvents) -> Unit = {},
-//    onEditNoteEvent: () -> Unit,
+    onEditNoteCard: (NoteEntity) -> Unit = {},
     onDeleteNoteEvent: (HomeEvents) -> Unit,
     count: Int?
 ){
@@ -77,19 +77,6 @@ fun Home(
                     )
                 }
             }
-
-//            LazyRow(
-//                modifier = Modifier.padding(vertical = 20.dp)
-//            ) {
-//                items(allCategories) { item ->
-//                    CategoryCard(
-//                        category = item,
-//                        onSortCategoryClick = { onSortCategoryClick(item.onSortNotesEvent) },
-//                        count = count
-//                    )
-//                }
-//            }
-
             LazyVerticalGrid(
                 columns = GridCells.Adaptive(minSize = 160.dp)
             ) {
@@ -97,7 +84,8 @@ fun Home(
                     NoteCard(
                         navController = navController,
                         noteElement = item,
-                        onEditNoteEvent = { navController.navigate("${Screens.Note.route}/${item.id}") },
+                        onEditNoteEvent = onEditNoteCard,
+//                        onEditNoteEvent = { navController.navigate("${Screens.Note.route}/${item.id}") },
                         onDeleteNoteEvent = onDeleteNoteEvent,
                     )
                 }

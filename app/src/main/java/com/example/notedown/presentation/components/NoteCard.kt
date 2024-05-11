@@ -47,13 +47,12 @@ fun NoteCard(
     navController: NavController,
     noteElement: NoteEntity,
     date: String = "12 Apr, 2024",
-    onEditNoteEvent: () -> Unit = {},
-    onDeleteNoteEvent: (HomeEvents) -> Unit = {}
+    onEditNoteEvent: (NoteEntity) -> Unit = {},
+    onDeleteNoteEvent: (HomeEvents) -> Unit = {},
+//    noteElementId: Int
 ){
 
     val color = colorMap[noteElement.category] ?: Color(0xFFA8D672)
-
-//    val noteId = noteElement.id
 
     Card(
         colors = CardDefaults.cardColors(
@@ -64,9 +63,8 @@ fun NoteCard(
             .height(200.dp)
             .padding(8.dp)
             .clickable(
-                onClick = onEditNoteEvent
+                onClick = { onEditNoteEvent(noteElement) }
             )
-//            .border(2.dp, MaterialTheme.colorScheme.onBackground, RoundedCornerShape(8.dp))
     ) {
 
         var expanded by remember{
@@ -143,19 +141,11 @@ fun NoteCard(
                         contentDescription = stringResource(id = R.string.edit),
                         modifier = Modifier.clickable(
                             onClick = {
-//                                expanded = !expanded
-//                                when(expanded){
-//                                    true -> onEditNoteEvent()
-//                                    false -> TODO()
+                                expanded = !expanded
+
+//                                if (expanded){
+//                                    navController.navigate("${Screens.Note.route}/${noteElement.id}")
 //                                }
-
-                                if (expanded){
-//                                    onEditNoteEvent(HomeEvents.DeleteNote(noteElement))
-//                                    onEditNoteEvent()
-                                    navController.navigate("${Screens.Note.route}/${noteElement.id}")
-
-
-                                }
                             }
                         ),
                         tint = color

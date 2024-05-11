@@ -1,5 +1,6 @@
 package com.example.notedown.presentation.components
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -25,6 +26,8 @@ import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldColors
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -43,24 +46,33 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.notedown.R
+import com.example.notedown.presentation.models.NoteElementState
+import com.example.notedown.presentation.models.NoteState
+import com.example.notedown.presentation.util.colorMap
+import com.example.notedown.presentation.viewmodels.NoteViewModel
 
 
 @Composable
 fun Note(
     navController: NavController,
-    noteId: Int,
+    noteElementState: NoteElementState
 ){
+
+    val color = colorMap[noteElementState.category] ?: Color(0xFFA8D672)
+
     var noteTitle by remember {
-        mutableStateOf("")
+        mutableStateOf(noteElementState.title)
     }
 
     var notes by remember {
-        mutableStateOf("")
+        mutableStateOf(noteElementState.notes)
     }
+
+
     val maxLength = 25
     Card(
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primary
+            containerColor = color
         ),
         modifier = Modifier.padding(8.dp)
     ) {
@@ -162,9 +174,14 @@ fun Note(
                     .padding(8.dp)
             ) {
 //                BtnEditNote(colorList = listOf(Color.Green, Color.Red, Color.Blue, Color.Magenta))
-                Text(text = noteId.toString())
+//                Text(text = noteId.toString())
 
             }
         }
     }
+
+
+
+
+
 }

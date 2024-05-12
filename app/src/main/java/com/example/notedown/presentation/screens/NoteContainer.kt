@@ -1,4 +1,4 @@
-package com.example.notedown.presentation.navigation
+package com.example.notedown.presentation.screens
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState

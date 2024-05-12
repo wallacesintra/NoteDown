@@ -60,13 +60,19 @@ fun Note(
 
     val color = colorMap[noteElementState.category] ?: Color(0xFFA8D672)
 
-    var noteTitle by remember {
-        mutableStateOf(noteElementState.title)
-    }
+//    var noteTitle by remember {
+//        mutableStateOf(noteElementState.title)
+//    }
+
+//    var noteTitle by remember {
+//        mutableStateOf("a minute of your time")
+//    }
 
     var notes by remember {
         mutableStateOf(noteElementState.notes)
     }
+
+    var noteTitle = noteElementState.title
 
 
     val maxLength = 25
@@ -78,72 +84,13 @@ fun Note(
     ) {
         Box {
             Column {
-                Row(
-                    horizontalArrangement = Arrangement.SpaceBetween,
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = "go back",
-                            tint = MaterialTheme.colorScheme.onPrimary,
-                            modifier = Modifier
-                                .padding(4.dp)
-                                .size(30.dp)
-                                .clickable(
-                                    onClick = { navController.popBackStack() }
-                                )
-                        )
-
-                        TextField(
-                            value = noteTitle,
-                            textStyle = TextStyle(
-                                fontWeight = FontWeight.W700,
-                                fontSize = 20.sp,
-                                color = MaterialTheme.colorScheme.onPrimary
-                            ),
-                            colors = TextFieldDefaults.colors(
-                                unfocusedContainerColor = Color.Transparent,
-                                focusedContainerColor = Color.Transparent,
-                                cursorColor = MaterialTheme.colorScheme.onPrimary
-                            ),
-                            maxLines = 1,
-                            placeholder = {
-                                Text(
-                                    text = stringResource(id = R.string.untitled),
-                                    color = MaterialTheme.colorScheme.onPrimary
-                                )
-                            },
-                            onValueChange = {
-                                if (it.length <= maxLength) {
-                                    noteTitle = it
-                                }
-                            }
-                        )
-                    }
-
-                    Box(
-                        contentAlignment = Alignment.Center,
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .defaultMinSize(minHeight = 34.dp)
-//                            .size(34.dp)
-                            .clip(RoundedCornerShape(17.dp))
-                            .background(MaterialTheme.colorScheme.background)
-
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Delete,
-                            contentDescription = "delete note",
-                            tint = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier
-
-                        )
-                    }
-                }
+                NoteTitleBar(
+//                    noteTitle = "add note now then",
+                    noteTitle = noteTitle,
+                    goBackEvent = { navController.popBackStack() },
+                    iconColor = color
+                )
+//                Text(text = noteTitle)
 
                 TextField(
                     value = notes,

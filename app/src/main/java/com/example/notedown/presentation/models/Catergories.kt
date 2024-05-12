@@ -32,7 +32,8 @@ enum class Categories{
 
 val allCategories: List<Category> = listOf(Category(
         "all",
-        Color(0xFFF6ECC9),
+//        Color(0xFFF6ECC9),
+        Color(0xFF9370DB),
         active = true,
         noteType = Categories.ALL,
         sortType = SortType.ALL,

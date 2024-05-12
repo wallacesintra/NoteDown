@@ -1,5 +1,7 @@
 package com.example.notedown.presentation.viewmodels
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -16,6 +18,7 @@ import com.example.notedown.presentation.events.HomeEvents
 import com.example.notedown.presentation.models.HomeState
 import com.example.notedown.presentation.models.SortType
 import com.example.notedown.presentation.screens.HomeViewState
+import com.example.notedown.presentation.util.formatDate
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,6 +27,8 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.LocalTime
 
 class HomeViewModel(
     private val noteDao: NoteDao
@@ -57,14 +62,17 @@ class HomeViewModel(
         )
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), HomeState())
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun addNewNote(type: String){
         val title: String = "Add title"
         val notes: String = "start writing note"
+        val currentTime = LocalDate.now()
 
         val noteElement = NoteEntity(
             title = title,
             note = notes,
-            category = type
+            category = type,
+            time = formatDate(currentTime)
         )
 
         viewModelScope.launch(Dispatchers.IO) {
@@ -74,6 +82,7 @@ class HomeViewModel(
     }
 
 
+    @RequiresApi(Build.VERSION_CODES.O)
     fun onEvent(event: HomeEvents){
         when (event){
             is HomeEvents.SortNotes -> {

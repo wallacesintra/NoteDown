@@ -5,5 +5,6 @@ data class NoteElementState(
     val title: String = "",
     val notes: String = "",
     val category: String = "important",
+    val time: String = "Now",
     val editEnabled: Boolean = false
 )

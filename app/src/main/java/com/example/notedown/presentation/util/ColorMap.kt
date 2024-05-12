@@ -3,7 +3,7 @@ package com.example.notedown.presentation.util
 import androidx.compose.ui.graphics.Color
 
 val colorMap = mapOf(
-    "all" to Color(0xFFF6ECC9),
+    "all" to Color(0xFF9370DB),
     "important" to Color(0xFFEB7A53),
     "work" to Color(0xFFF7D44C),
     "lecture notes" to Color(0xFF98B7DB),

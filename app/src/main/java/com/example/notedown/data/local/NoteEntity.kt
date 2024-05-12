@@ -10,6 +10,6 @@ data class NoteEntity(
     val title: String = "",
     val note: String = "",
     val category: String = "",
-//    val time: Date,
+    val time: String? = null,
     @PrimaryKey(autoGenerate = true) val id:Int? = null
 )

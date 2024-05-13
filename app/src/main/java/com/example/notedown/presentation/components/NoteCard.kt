@@ -52,6 +52,10 @@ fun NoteCard(
 ){
 
     val color = colorMap[noteElement.category] ?: Color(0xFFA8D672)
+    var expanded by remember{
+        mutableStateOf(false)
+    }
+
 
     Card(
         colors = CardDefaults.cardColors(
@@ -62,13 +66,12 @@ fun NoteCard(
             .height(200.dp)
             .padding(8.dp)
             .clickable(
-                onClick = { onEditNoteEvent(noteElement) }
+                onClick = {
+                    onEditNoteEvent(noteElement)
+                }
             )
     ) {
 
-        var expanded by remember{
-            mutableStateOf(false)
-        }
 
         Box(
             modifier = Modifier.padding(8.dp)
@@ -133,7 +136,11 @@ fun NoteCard(
                             modifier = Modifier
                                 .padding(bottom = 20.dp)
                                 .clickable(
-                                    onClick = { onDeleteNoteEvent(HomeEvents.DeleteNote(noteElement)) }
+                                    onClick = {
+                                        onDeleteNoteEvent(HomeEvents.DeleteNote(noteElement))
+                                        expanded = !expanded
+
+                                    }
                                 )
                         )
                     }

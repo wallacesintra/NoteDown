@@ -60,13 +60,8 @@ fun Note(
 
     val color = colorMap[noteElementState.category] ?: Color(0xFFA8D672)
 
-//    var noteTitle by remember {
-//        mutableStateOf(noteElementState.title)
-//    }
+    val noteTitleValue = noteElementState.title
 
-//    var noteTitle by remember {
-//        mutableStateOf("a minute of your time")
-//    }
 
     var notes by remember {
         mutableStateOf(noteElementState.notes)
@@ -75,7 +70,6 @@ fun Note(
     var noteTitle = noteElementState.title
 
 
-    val maxLength = 25
     Card(
         colors = CardDefaults.cardColors(
             containerColor = color
@@ -86,11 +80,11 @@ fun Note(
             Column {
                 NoteTitleBar(
 //                    noteTitle = "add note now then",
-                    noteTitle = noteTitle,
+                    noteTitle = noteTitleValue ,
                     goBackEvent = { navController.popBackStack() },
                     iconColor = color
                 )
-//                Text(text = noteTitle)
+//                Text(text = noteElementState.time)
 
                 TextField(
                     value = notes,
@@ -120,8 +114,7 @@ fun Note(
                     .align(Alignment.BottomEnd)
                     .padding(8.dp)
             ) {
-//                BtnEditNote(colorList = listOf(Color.Green, Color.Red, Color.Blue, Color.Magenta))
-//                Text(text = noteId.toString())
+
 
             }
         }

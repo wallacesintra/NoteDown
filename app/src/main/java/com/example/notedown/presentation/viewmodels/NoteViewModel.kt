@@ -1,5 +1,6 @@
 package com.example.notedown.presentation.viewmodels
 
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -19,6 +20,7 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class NoteViewModel(
@@ -26,6 +28,31 @@ class NoteViewModel(
     private val noteDao: NoteDao
 ): ViewModel(){
 
+    var noteDetails = mutableStateOf(NoteEntity())
+        private  set
+
+    fun getNoteDetails(noteId: Int) {
+        viewModelScope.launch {
+            val details = noteDao.getNoteWithId(noteId).stateIn(
+                viewModelScope,
+                SharingStarted.WhileSubscribed(2000),
+                initialValue = NoteEntity()
+            )
+
+            noteDetails.value = NoteEntity(
+                title = details.value.title,
+                note = details.value.note,
+                category = details.value.category,
+                time = details.value.time,
+                id = details.value.id
+            )
+        }
+    }
+
+//    fun getById(id: Int): MutableState<NoteEntity>{
+//        getNoteDetails(id)
+//        return noteDetails
+//    }
 
     fun getNotes(noteId: Int): Flow<NoteEntity> {
         return noteDao.getNoteWithId(noteId)

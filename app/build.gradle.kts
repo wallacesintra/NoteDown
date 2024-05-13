@@ -60,6 +60,8 @@ dependencies {
     
     ///
     implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
     
     //room
     val room_version = "2.6.1"

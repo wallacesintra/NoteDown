@@ -8,8 +8,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -31,50 +34,31 @@ import com.example.notedown.R
 
 @Composable
 fun BtnEditNote(
-    colorList: List<Color>
+    onEditEvent: () -> Unit = {}
 ){
-    var expanded by remember {
-        mutableStateOf(false)
-    }
     Box(
-        contentAlignment = Alignment.Center,
         modifier = Modifier
-            .height(60.dp)
             .clip(RoundedCornerShape(30.dp))
-            .background(MaterialTheme.colorScheme.onPrimary.copy(alpha = 0.7f))
-            .padding(12.dp)
-    ) {
-        Row(
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            AnimatedVisibility(visible = expanded) {
-                Row(
-                    horizontalArrangement = Arrangement.SpaceEvenly
-                ) {
-                    for (i in colorList){
-                        ColorCard(color = i)
-                    }
-                }
-            }
-
-            Icon(
-                painter = painterResource(id = R.drawable.edit),
-                contentDescription = stringResource(id = R.string.edit),
-                tint = MaterialTheme.colorScheme.primary,
-                modifier = Modifier
-                    .clickable(
-                        onClick = { expanded = !expanded }
-                    )
-                    .padding(3.dp)
-                    .alpha(1.0f)
+            .background(Color.Transparent.copy(alpha = 0.1f))
+            .clickable(
+                onClick = onEditEvent
             )
-        }
+    ) {
+
+        Icon(
+            imageVector = Icons.Default.Edit,
+            contentDescription = "edit note",
+            tint = MaterialTheme.colorScheme.background,
+            modifier = Modifier
+                .padding(10.dp)
+                .size(30.dp)
+
+        )
     }
 }
 
 @Preview(showSystemUi = true, showBackground = true)
 @Composable
 fun PreviewBtnEditNote(){
-    BtnEditNote(colorList = listOf(Color.Green, Color.Red, Color.Blue, Color.Magenta))
+    BtnEditNote()
 }

@@ -1,5 +1,7 @@
 package com.example.notedown.presentation.navigation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -13,6 +15,7 @@ import com.example.notedown.presentation.screens.NoteScreen
 import com.example.notedown.presentation.viewmodels.HomeViewModel
 import com.example.notedown.presentation.viewmodels.NoteViewModel
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NavigationHost(){
     val navController = rememberNavController()

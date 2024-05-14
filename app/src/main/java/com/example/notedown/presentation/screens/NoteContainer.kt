@@ -1,5 +1,7 @@
 package com.example.notedown.presentation.screens
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -14,15 +16,16 @@ import kotlinx.coroutines.flow.stateIn
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineScope
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NoteScreen(
     noteId: Int,
     noteViewModel: NoteViewModel,
     navController: NavController
 ){
-    LaunchedEffect(key1 = noteId) {
-        noteViewModel.getNoteDetails(noteId)
-    }
+//    LaunchedEffect(key1 = noteId) {
+//        noteViewModel.getNoteDetails(noteId)
+//    }
     val noteDetails by noteViewModel.getNotes(noteId).collectAsState(initial = NoteEntity())
 //    noteViewModel.getNoteDetails(noteId)
 //    val noteDetails = noteViewModel.noteDetails
@@ -52,7 +55,8 @@ fun NoteScreen(
     if (noteElementState != null) {
         Note(
             navController = navController,
-            noteElementState = noteElementState
+            noteElementState = noteElementState,
+            noteViewModel = noteViewModel
         )
     }
 

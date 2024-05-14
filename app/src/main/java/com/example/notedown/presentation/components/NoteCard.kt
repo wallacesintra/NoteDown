@@ -46,7 +46,6 @@ import com.example.notedown.presentation.util.colorMap
 fun NoteCard(
     navController: NavController,
     noteElement: NoteEntity,
-//    date: String = "12 Apr, 2024",
     onEditNoteEvent: (NoteEntity) -> Unit = {},
     onDeleteNoteEvent: (HomeEvents) -> Unit = {},
 ){
@@ -84,7 +83,7 @@ fun NoteCard(
                 Text(
                     text = noteElement.title,
                     style = MaterialTheme.typography.labelMedium,
-                    color = MaterialTheme.colorScheme.onBackground,
+                    color = MaterialTheme.colorScheme.background,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.W700,
                     modifier = Modifier.padding(vertical = 3.dp)
@@ -96,7 +95,7 @@ fun NoteCard(
                     fontWeight = FontWeight.W300,
                     style = TextStyle(
                         brush = Brush.verticalGradient(
-                            colors = listOf(MaterialTheme.colorScheme.onBackground, MaterialTheme.colorScheme.onBackground,Color.Transparent)
+                            colors = listOf(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background,Color.Transparent)
                         )
                     ),
                     fontSize = 14.sp,
@@ -106,7 +105,7 @@ fun NoteCard(
                 Text(
                     text = it,
                     fontWeight = FontWeight.W500,
-                    color = MaterialTheme.colorScheme.onBackground,
+                    color = MaterialTheme.colorScheme.background,
                     modifier = Modifier
                         .align(Alignment.BottomStart)
                 )

@@ -57,12 +57,14 @@ fun NoteTitleBar(
             Icon(
                 imageVector = Icons.Default.ArrowBack,
                 contentDescription = "go back",
+                tint = MaterialTheme.colorScheme.background,
                 modifier = Modifier
                     .padding(8.dp)
                     .size(32.dp)
                     .clickable(
                         onClick = goBackEvent
                     )
+
             )
 
             TextField(
@@ -72,7 +74,7 @@ fun NoteTitleBar(
                 textStyle = TextStyle(
                     fontWeight = FontWeight.W700,
                     fontSize = 20.sp,
-                    color = MaterialTheme.colorScheme.onBackground
+                    color = MaterialTheme.colorScheme.background
                 ),
                 placeholder = {
                               Text(text = "Add Note title")

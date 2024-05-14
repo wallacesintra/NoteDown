@@ -21,7 +21,7 @@ interface NoteDao {
     @Query("SELECT * FROM noteentity ORDER BY id DESC")
     fun getAllNotes(): Flow<List<NoteEntity>>
 
-    @Query("SELECT * FROM noteentity WHERE  category = :category")
+    @Query("SELECT * FROM noteentity WHERE  category = :category ORDER BY id DESC")
     fun sortNotes(category: String) : Flow<List<NoteEntity>>
 
     @Query("SELECT * FROM noteentity WHERE id = :noteId")

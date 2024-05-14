@@ -1,5 +1,7 @@
 package com.example.notedown.presentation.viewmodels
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -16,11 +18,14 @@ import com.example.notedown.data.local.NoteDao
 import com.example.notedown.data.local.NoteEntity
 import com.example.notedown.presentation.models.NoteElementState
 import com.example.notedown.presentation.models.NoteState
+import com.example.notedown.presentation.util.formatDate
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
+import java.time.LocalDate
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class NoteViewModel(
@@ -28,34 +33,24 @@ class NoteViewModel(
     private val noteDao: NoteDao
 ): ViewModel(){
 
-    var noteDetails = mutableStateOf(NoteEntity())
-        private  set
-
-    fun getNoteDetails(noteId: Int) {
-        viewModelScope.launch {
-            val details = noteDao.getNoteWithId(noteId).stateIn(
-                viewModelScope,
-                SharingStarted.WhileSubscribed(2000),
-                initialValue = NoteEntity()
-            )
-
-            noteDetails.value = NoteEntity(
-                title = details.value.title,
-                note = details.value.note,
-                category = details.value.category,
-                time = details.value.time,
-                id = details.value.id
-            )
-        }
-    }
-
-//    fun getById(id: Int): MutableState<NoteEntity>{
-//        getNoteDetails(id)
-//        return noteDetails
-//    }
 
     fun getNotes(noteId: Int): Flow<NoteEntity> {
         return noteDao.getNoteWithId(noteId)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun updateNote(newTitle: String, newNotes:String, id: Int, category:String){
+        viewModelScope.launch(Dispatchers.IO) {
+
+            val newNote = NoteEntity(
+                title = newTitle,
+                note = newNotes,
+                id = id,
+                category = category,
+                time = formatDate(LocalDate.now())
+            )
+            noteDao.updateNote(newNote)
+        }
     }
 
 

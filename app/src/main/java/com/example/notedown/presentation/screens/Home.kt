@@ -27,6 +27,7 @@ import com.example.notedown.R
 import com.example.notedown.data.local.NoteEntity
 import com.example.notedown.presentation.components.BtnAddNote
 import com.example.notedown.presentation.components.CategoryCard
+import com.example.notedown.presentation.components.EmptyNoteList
 import com.example.notedown.presentation.components.NoteCard
 import com.example.notedown.presentation.events.HomeEvents
 import com.example.notedown.presentation.models.Category
@@ -77,19 +78,25 @@ fun Home(
                     )
                 }
             }
-            LazyVerticalGrid(
-                columns = GridCells.Adaptive(minSize = 160.dp)
-            ) {
-                items(noteList) {item ->
-                    NoteCard(
-                        navController = navController,
-                        noteElement = item,
-                        onEditNoteEvent = onEditNoteCard,
+
+            if (noteList.isEmpty()){
+                EmptyNoteList()
+            } else {
+                LazyVerticalGrid(
+                    columns = GridCells.Adaptive(minSize = 160.dp)
+                ) {
+                    items(noteList) {item ->
+                        NoteCard(
+                            navController = navController,
+                            noteElement = item,
+                            onEditNoteEvent = onEditNoteCard,
 //                        onEditNoteEvent = { navController.navigate("${Screens.Note.route}/${item.id}") },
-                        onDeleteNoteEvent = onDeleteNoteEvent,
-                    )
+                            onDeleteNoteEvent = onDeleteNoteEvent,
+                        )
+                    }
                 }
             }
+
         }
 
 //        BtnAddNote( modifier = Modifier.align(Alignment.BottomEnd))

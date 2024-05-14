@@ -15,7 +15,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedCard
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -38,7 +37,6 @@ import androidx.navigation.NavController
 import com.example.notedown.R
 import com.example.notedown.data.local.NoteEntity
 import com.example.notedown.presentation.events.HomeEvents
-import com.example.notedown.presentation.navigation.Screens
 import com.example.notedown.presentation.util.colorMap
 
 
@@ -81,7 +79,7 @@ fun NoteCard(
                     .align(Alignment.BottomEnd)
             ){
                 Text(
-                    text = noteElement.title,
+                    text = if (noteElement.title == "") "untitled" else noteElement.title,
                     style = MaterialTheme.typography.labelMedium,
                     color = MaterialTheme.colorScheme.background,
                     fontSize = 20.sp,
@@ -89,13 +87,14 @@ fun NoteCard(
                     modifier = Modifier.padding(vertical = 3.dp)
                 )
                 Text(
-                    text = noteElement.note,
+                    text =  if (noteElement.note == "") "write your thoughts down" else noteElement.note,
                     overflow = TextOverflow.Ellipsis,
                     maxLines =5,
                     fontWeight = FontWeight.W300,
                     style = TextStyle(
                         brush = Brush.verticalGradient(
-                            colors = listOf(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background,Color.Transparent)
+                            colors = if (noteElement.note.length < 30) listOf(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background)
+                                else listOf(MaterialTheme.colorScheme.background, MaterialTheme.colorScheme.background,Color.Transparent)
                         )
                     ),
                     fontSize = 14.sp,

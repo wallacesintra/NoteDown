@@ -64,8 +64,8 @@ class HomeViewModel(
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun addNewNote(type: String){
-        val title: String = "Untitled"
-        val notes: String = "start writing note"
+        val title: String = ""
+        val notes: String = ""
         val currentTime = LocalDate.now()
 
         val noteElement = NoteEntity(

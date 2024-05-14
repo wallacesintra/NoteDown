@@ -39,7 +39,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.notedown.R
-import com.example.notedown.data.local.NoteEntity
 import com.example.notedown.presentation.models.NoteElementState
 import com.example.notedown.presentation.util.colorMap
 import com.example.notedown.presentation.viewmodels.NoteViewModel
@@ -56,7 +55,7 @@ fun Note(
     val color = colorMap[noteElementState.category] ?: Color(0xFFA8D672)
 
     var enableEditing by remember {
-        mutableStateOf(true)
+        mutableStateOf(false)
     }
 
     var noteTitle by remember {
@@ -138,7 +137,10 @@ fun Note(
                             tint = color,
                             modifier = Modifier
                                 .clickable(
-                                    onClick = {} //handle delete note
+                                    onClick = {//handle delete note
+
+
+                                    }
                                 )
                                 .padding(8.dp)
 
@@ -184,11 +186,13 @@ fun Note(
                     .align(Alignment.BottomEnd)
                     .padding(8.dp)
             ) {
-                BtnEditNote(onEditEvent = {
-//                    enableEditing = !enableEditing
-//
+                BtnEditNote(
+                    enableEditNote = enableEditing,
+                    onEnableEdit = { enableEditing = !enableEditing},
+                    onEditEvent = {
                     Log.d("edit title", noteTitle)
                     Log.d("edit note", notes)
+
                     noteElementState.id?.let {
                         noteViewModel.updateNote(
                             newTitle = noteTitle,

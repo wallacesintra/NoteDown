@@ -2,9 +2,23 @@ package com.example.notedown.presentation.navigation
 
 import android.os.Build
 import androidx.annotation.RequiresApi
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.core.EaseIn
+import androidx.compose.animation.core.EaseOut
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.LinearEasing
+import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.slideIn
+import androidx.compose.animation.slideOut
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.unit.IntOffset
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -32,9 +46,13 @@ fun NavigationHost(){
 
     NavHost(
         navController = navController,
-        startDestination = Screens.Home.route
+        startDestination = Screens.Home.route,
+        enterTransition = { EnterTransition.None},
+        exitTransition = { ExitTransition.None}
     ) {
-        composable(Screens.Home.route) { Home(
+        composable(
+            Screens.Home.route,
+        ) { Home(
             navController = navController,
             noteList = homeUiState.noteList,
             categoryList = allCategories,
@@ -55,7 +73,17 @@ fun NavigationHost(){
 
         composable(
             Screens.Note.route,
-            arguments =Screens.Note.navArguments
+            arguments =Screens.Note.navArguments,
+            enterTransition = {
+                slideIn(tween(500, easing = LinearOutSlowInEasing)){
+                    IntOffset(100, -50)
+                }
+            },
+            exitTransition = {
+                slideOut(tween(400, easing = FastOutSlowInEasing)){
+                    IntOffset(-100, 50)
+                }
+            }
             ) {
                 val noteId = it.arguments?.getInt("noteId")
                 if (noteId != null) {

@@ -32,7 +32,6 @@ import com.example.notedown.presentation.components.NoteCard
 import com.example.notedown.presentation.events.HomeEvents
 import com.example.notedown.presentation.models.Category
 import com.example.notedown.presentation.models.allCategories
-import com.example.notedown.presentation.navigation.Screens
 
 @Composable
 fun Home(
@@ -89,8 +88,7 @@ fun Home(
                         NoteCard(
                             navController = navController,
                             noteElement = item,
-                            onEditNoteEvent = onEditNoteCard,
-//                        onEditNoteEvent = { navController.navigate("${Screens.Note.route}/${item.id}") },
+                            goToNoteScreen = onEditNoteCard,
                             onDeleteNoteEvent = onDeleteNoteEvent,
                         )
                     }
@@ -99,7 +97,7 @@ fun Home(
 
         }
 
-//        BtnAddNote( modifier = Modifier.align(Alignment.BottomEnd))
+        // create new note button
         Box(
             modifier = Modifier
                 .padding(8.dp)

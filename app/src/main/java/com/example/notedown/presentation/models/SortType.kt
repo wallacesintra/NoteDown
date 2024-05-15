@@ -6,5 +6,5 @@ enum class SortType {
     WORK,
     LECTURE_NOTE,
     RANDOM,
-    SHOPPING_LIST
+    GOAL
 }

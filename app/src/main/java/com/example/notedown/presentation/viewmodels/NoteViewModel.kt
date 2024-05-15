@@ -38,6 +38,12 @@ class NoteViewModel(
         return noteDao.getNoteWithId(noteId)
     }
 
+    fun deleteNoteById(noteId: Int){
+        viewModelScope.launch(Dispatchers.IO) {
+            noteDao.deleteNoteById(noteId)
+        }
+    }
+
     @RequiresApi(Build.VERSION_CODES.O)
     fun updateNote(newTitle: String, newNotes:String, id: Int, category:String){
         viewModelScope.launch(Dispatchers.IO) {

@@ -44,7 +44,7 @@ import com.example.notedown.presentation.util.colorMap
 fun NoteCard(
     navController: NavController,
     noteElement: NoteEntity,
-    onEditNoteEvent: (NoteEntity) -> Unit = {},
+    goToNoteScreen: (NoteEntity) -> Unit = {},
     onDeleteNoteEvent: (HomeEvents) -> Unit = {},
 ){
 
@@ -64,7 +64,7 @@ fun NoteCard(
             .padding(8.dp)
             .clickable(
                 onClick = {
-                    onEditNoteEvent(noteElement)
+                    goToNoteScreen(noteElement)
                 }
             )
     ) {
@@ -137,25 +137,37 @@ fun NoteCard(
                                     onClick = {
                                         onDeleteNoteEvent(HomeEvents.DeleteNote(noteElement))
                                         expanded = !expanded
-
                                     }
                                 )
                         )
                     }
-                    Icon(
-                        painter = painterResource(id = R.drawable.edit),
-                        contentDescription = stringResource(id = R.string.edit),
-                        modifier = Modifier.clickable(
-                            onClick = {
-                                expanded = !expanded
 
-//                                if (expanded){
-//                                    navController.navigate("${Screens.Note.route}/${noteElement.id}")
-//                                }
-                            }
-                        ),
-                        tint = color
-                    )
+                    if (expanded){
+                        Icon(
+                            painter = painterResource(id = R.drawable.edit),
+                            contentDescription = stringResource(id = R.string.edit),
+                            modifier = Modifier.clickable(
+                                onClick = {
+                                    goToNoteScreen(noteElement)
+                                }
+                            ),
+                            tint = color
+                        )
+
+                    }else {
+                        Icon(
+                            painter = painterResource(id = R.drawable.edit),
+                            contentDescription = stringResource(id = R.string.edit),
+                            modifier = Modifier.clickable(
+                                onClick = {
+                                    expanded = !expanded
+
+                                }
+                            ),
+                            tint = color
+                        )
+                    }
+
                 }
             }
         }

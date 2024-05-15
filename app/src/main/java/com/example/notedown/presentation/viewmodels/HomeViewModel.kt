@@ -28,7 +28,6 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.time.LocalTime
 
 class HomeViewModel(
     private val noteDao: NoteDao
@@ -48,7 +47,7 @@ class HomeViewModel(
                 SortType.WORK -> noteDao.sortNotes("work")
                 SortType.LECTURE_NOTE -> noteDao.sortNotes("lecture notes")
                 SortType.RANDOM -> noteDao.sortNotes("random")
-                SortType.SHOPPING_LIST -> noteDao.sortNotes("shopping list")
+                SortType.GOAL -> noteDao.sortNotes("shopping list")
             }
         }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())

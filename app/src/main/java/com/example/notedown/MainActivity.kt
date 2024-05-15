@@ -1,8 +1,10 @@
 package com.example.notedown
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -15,6 +17,7 @@ import com.example.notedown.presentation.navigation.NavigationHost
 import com.example.notedown.presentation.theme.NoteDownTheme
 
 class MainActivity : ComponentActivity() {
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -24,22 +27,6 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-
-                    val noteList = listOf(
-                        NoteModel("read the note", notes = "iugiowfiiog ouguogwf oogwg ouuogw ouogwgf ouogogwg oogow ouhougwg ouogw gougogw goougw ", "important"),
-                        NoteModel("read the note", notes = "iugiowfiiog ouguogwf oogwg ouuogw ouogwgf ouogogwg oogow ouhougwg ouogw gougogw goougw ", "random"),
-                        NoteModel("read the note", notes = "iugiowfiiog ouguogwf oogwg ouuogw ouogwgf ouogogwg oogow ouhougwg ouogw gougogw goougw ", "lecture notes"),
-                        NoteModel("read the note", notes = "iugiowfiiog ouguogwf oogwg ouuogw ouogwgf ouogogwg oogow ouhougwg ouogw gougogw goougw ", "important"),
-                        NoteModel("read the note", notes = "iugiowfiiog ouguogwf oogwg ouuogw ouogwgf ouogogwg oogow ouhougwg ouogw gougogw goougw ", "shopping list"),
-                        NoteModel("read the note", notes = "iugiowfiiog ouguogwf oogwg ouuogw ouogwgf ouogogwg oogow ouhougwg ouogw gougogw goougw ", "random"),
-                        NoteModel("read the note", notes = "iugiowfiiog ouguogwf oogwg ouuogw ouogwgf ouogogwg oogow ouhougwg ouogw gougogw goougw ", "lecture notes"),
-                        NoteModel("read the note", notes = "iugiowfiiog ouguogwf oogwg ouuogw ouogwgf ouogogwg oogow ouhougwg ouogw gougogw goougw ", "work"),
-                        NoteModel("read the note", notes = "iugiowfiiog ouguogwf oogwg ouuogw ouogwgf ouogogwg oogow ouhougwg ouogw gougogw goougw ", "lecture notes"),
-                        NoteModel("read the note", notes = "iugiowfiiog ouguogwf oogwg ouuogw ouogwgf ouogogwg oogow ouhougwg ouogw gougogw goougw ", "work"),
-                        NoteModel("read the note", notes = "iugiowfiiog ouguogwf oogwg ouuogw ouogwgf ouogogwg oogow ouhougwg ouogw gougogw goougw ", "random"),
-
-
-                    )
                     NavigationHost()
                 }
             }

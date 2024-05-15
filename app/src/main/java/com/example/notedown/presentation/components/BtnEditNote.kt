@@ -30,7 +30,6 @@ fun BtnEditNote(
         modifier = Modifier
             .clip(RoundedCornerShape(30.dp))
             .background(Color.Transparent.copy(alpha = 0.1f))
-
     ) {
 
         if (!enableEditNote){

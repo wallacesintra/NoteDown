@@ -32,14 +32,14 @@ fun CategoryCard(
     onSortCategoryClick: (HomeEvents) -> Unit = {},
     category: Category,
     isCategoryActive: Boolean,
-    count: Int?
-//    modifier: Modifier = Modifier
+    count: Int?,
 ){
      val cardColor = colorMap[category.type] ?: Color(0xFFA8D672)
 
     var active by remember {
         mutableStateOf(isCategoryActive)
     }
+
     Box(
         contentAlignment = Alignment.Center,
         modifier = Modifier
@@ -51,9 +51,7 @@ fun CategoryCard(
             .clickable(
                 onClick = {
                     active = !active
-                    if (active) {
-                        onSortCategoryClick(category.onSortNotesEvent)
-                    }
+                    onSortCategoryClick(category.onSortNotesEvent)
                 }
             )
     ) {
@@ -66,7 +64,7 @@ fun CategoryCard(
                 fontSize = 18.sp,
             )
 
-            AnimatedVisibility(visible = active) {
+            AnimatedVisibility(visible = isCategoryActive) {
                 Text(
                     text = count.toString(),
                     color = cardColor,

@@ -15,7 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -32,6 +32,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -41,6 +42,7 @@ import androidx.navigation.NavController
 import com.example.notedown.R
 import com.example.notedown.presentation.models.NoteElementState
 import com.example.notedown.presentation.util.colorMap
+import com.example.notedown.presentation.util.shareNote
 import com.example.notedown.presentation.viewmodels.NoteViewModel
 
 
@@ -51,12 +53,9 @@ fun Note(
     noteElementState: NoteElementState,
     noteViewModel: NoteViewModel
 ){
+    val context = LocalContext.current
 
     val color = colorMap[noteElementState.category] ?: Color(0xFFA8D672)
-
-    var enableEditing by remember {
-        mutableStateOf(false)
-    }
 
     var noteTitle by remember {
         mutableStateOf(noteElementState.title)
@@ -65,6 +64,14 @@ fun Note(
     var notes by remember {
         mutableStateOf(noteElementState.notes)
     }
+    var enableEditing by remember {
+        mutableStateOf(
+            // if  title and notes are empty, it will be true be default
+            notes == "" && noteTitle == ""
+        )
+    }
+
+
 
 
     Card(
@@ -81,6 +88,8 @@ fun Note(
                     Row(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
+
+                        /// go back to home screen
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
                             contentDescription = "go back",
@@ -123,23 +132,29 @@ fun Note(
                         )
                     }
 
+                    // share button
                     Box(
                         modifier = Modifier
                             .padding(8.dp)
                             .size(40.dp)
                             .clip(RoundedCornerShape(20.dp))
-                            .background(MaterialTheme.colorScheme.background)
+                            .background(Color.Transparent)
                             .align(Alignment.CenterEnd)
                     ) {
                         Icon(
-                            imageVector = Icons.Default.Delete,
+                            imageVector = Icons.Default.Share,
                             contentDescription = "delete note",
-                            tint = color,
+                            tint = MaterialTheme.colorScheme.background,
                             modifier = Modifier
                                 .clickable(
-                                    onClick = {//handle delete note
-
-
+                                    //share note
+                                    onClick = {
+                                        if (notes != "" && noteTitle != "") {
+                                            context.shareNote(
+                                                noteTitle,
+                                                notes
+                                            )
+                                        }
                                     }
                                 )
                                 .padding(8.dp)
@@ -175,11 +190,12 @@ fun Note(
                     ),
                     onValueChange = {
                         notes = it
-                        Log.d("note note:", notes)
                     },
                     modifier = Modifier.fillMaxSize()
                 )
             }
+
+            // edit note button
             Box(
                 contentAlignment = Alignment.Center,
                 modifier = Modifier

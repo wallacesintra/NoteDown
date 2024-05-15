@@ -25,8 +25,9 @@ enum class Categories{
     WORK,
     LECTURE_NOTE,
     RANDOM,
-    SHOPPING_LIST
+    GOALS
 }
+
 
 
 
@@ -72,10 +73,10 @@ val allCategories: List<Category> = listOf(Category(
         onSortNotesEvent = HomeEvents.SortNotes(SortType.RANDOM)
     ),
     Category(
-        "shopping list",
+        "goals",
         Color(0xFFA8D672),
-        noteType = Categories.SHOPPING_LIST,
-        sortType = SortType.SHOPPING_LIST,
+        noteType = Categories.GOALS,
+        sortType = SortType.GOAL,
         onAddNoteEvent = HomeEvents.AddNote("shopping list"),
-        onSortNotesEvent = HomeEvents.SortNotes(SortType.SHOPPING_LIST)
+        onSortNotesEvent = HomeEvents.SortNotes(SortType.GOAL)
     ),)

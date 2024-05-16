@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -78,59 +79,21 @@ fun Note(
         colors = CardDefaults.cardColors(
             containerColor = color
         ),
-        modifier = Modifier.padding(8.dp)
+        modifier = Modifier
+            .padding(8.dp)
+            .fillMaxSize()
     ) {
         Box {
-            Column {
-                Box(
-                    contentAlignment = Alignment.Center
+
+            Box(
+                contentAlignment = Alignment.Center,
+                modifier = Modifier
+                    .align(Alignment.TopEnd)
+            ) {
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ) {
-
-                        /// go back to home screen
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = "go back",
-                            tint = MaterialTheme.colorScheme.background,
-                            modifier = Modifier
-                                .padding(8.dp)
-                                .size(32.dp)
-                                .clickable(
-                                    onClick = { navController.popBackStack() }
-                                )
-
-                        )
-
-                        TextField(
-                            value = noteTitle,
-                            enabled = enableEditing,
-                            onValueChange = { noteTitle = it },
-                            textStyle = TextStyle(
-                                fontWeight = FontWeight.W700,
-                                fontSize = 22.sp,
-                                color = MaterialTheme.colorScheme.background
-                            ),
-                            placeholder = {
-                                Text(
-                                    text = "add note title",
-                                    color = MaterialTheme.colorScheme.background
-                                )
-                            },
-                            colors = TextFieldDefaults.colors(
-                                unfocusedContainerColor = Color.Transparent,
-                                focusedContainerColor = Color.Transparent,
-                                cursorColor = MaterialTheme.colorScheme.onBackground,
-                                focusedIndicatorColor = Color.Transparent,
-                                unfocusedIndicatorColor = Color.Transparent,
-                                disabledContainerColor = Color.Transparent,
-                                disabledIndicatorColor = Color.Transparent
-                            ),
-                            singleLine = true,
-                            modifier = Modifier.fillMaxWidth()
-                        )
-                    }
 
                     // share button
                     Box(
@@ -139,7 +102,6 @@ fun Note(
                             .size(40.dp)
                             .clip(RoundedCornerShape(20.dp))
                             .background(Color.Transparent)
-                            .align(Alignment.CenterEnd)
                     ) {
                         Icon(
                             imageVector = Icons.Default.Share,
@@ -158,11 +120,87 @@ fun Note(
                                     }
                                 )
                                 .padding(8.dp)
-
                         )
                     }
 
+                    // edit note button
+                    Box(
+                        contentAlignment = Alignment.Center,
+                        modifier = Modifier
+                            .padding(8.dp)
+                    ) {
+                        BtnEditNote(
+                            enableEditNote = enableEditing,
+                            onEnableEdit = { enableEditing = !enableEditing },
+                            onEditEvent = {
+                                Log.d("edit title", noteTitle)
+                                Log.d("edit note", notes)
+
+                                noteElementState.id?.let {
+                                    noteViewModel.updateNote(
+                                        newTitle = noteTitle,
+                                        newNotes = notes,
+                                        id = it,
+                                        category = noteElementState.category
+                                    )
+                                }
+                            })
+                    }
+
+
                 }
+
+            }
+            Column {
+                Box(
+                    contentAlignment = Alignment.Center
+                ) {
+
+
+                    /// go back to home screen
+                    Icon(
+                        imageVector = Icons.Default.ArrowBack,
+                        contentDescription = "go back",
+                        tint = MaterialTheme.colorScheme.background,
+                        modifier = Modifier
+                            .padding(14.dp)
+                            .size(32.dp)
+                            .clickable(
+                                onClick = { navController.popBackStack() }
+                            )
+
+                    )
+
+
+
+                }
+                TextField(
+                    value = noteTitle,
+                    enabled = enableEditing,
+                    onValueChange = { noteTitle = it },
+                    textStyle = TextStyle(
+                        fontWeight = FontWeight.W700,
+                        fontSize = 22.sp,
+                        color = MaterialTheme.colorScheme.background
+                    ),
+                    placeholder = {
+                        Text(
+                            text = "add note title",
+                            color = MaterialTheme.colorScheme.background
+                        )
+                    },
+                    colors = TextFieldDefaults.colors(
+                        unfocusedContainerColor = Color.Transparent,
+                        focusedContainerColor = Color.Transparent,
+                        cursorColor = MaterialTheme.colorScheme.onBackground,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        disabledContainerColor = Color.Transparent,
+                        disabledIndicatorColor = Color.Transparent
+                    ),
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth()
+                )
 
 
 
@@ -195,30 +233,7 @@ fun Note(
                 )
             }
 
-            // edit note button
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier
-                    .align(Alignment.BottomEnd)
-                    .padding(8.dp)
-            ) {
-                BtnEditNote(
-                    enableEditNote = enableEditing,
-                    onEnableEdit = { enableEditing = !enableEditing},
-                    onEditEvent = {
-                    Log.d("edit title", noteTitle)
-                    Log.d("edit note", notes)
 
-                    noteElementState.id?.let {
-                        noteViewModel.updateNote(
-                            newTitle = noteTitle,
-                            newNotes = notes,
-                            id = it,
-                            category = noteElementState.category
-                        )
-                    }
-                })
-            }
         }
     }
 
